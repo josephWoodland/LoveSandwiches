@@ -109,6 +109,20 @@ def calculate_stock_data(data):
         new_stock_data.append(round(stock_num)) 
     return new_stock_data
 
+def get_stock_values(data):
+    """
+    Takes in the stock data array and retruns an object with the keys and values of each stock item
+    """
+    # Get the stock item names - the first row of the stock worksheet
+    print ('Getting stock list...')
+    stock = SHEET.worksheet('stock').get_all_values()
+    stock_items = stock[0]
+    stock_list = zip(stock_items, data)
+    stock_dict = dict(stock_list)
+    print(stock_list)
+    print(stock_dict)
+
+
 def main():
     """
     Run all program function
@@ -118,9 +132,12 @@ def main():
     update_worksheet(sales_data, 'sales')
     new_surplus_data = calculate_surplus_data(sales_data)
     update_worksheet(new_surplus_data, 'surplus')
-    sales_columns = get_last_5_entries_sales()
-    stock_data = calculate_stock_data(sales_columns)
-    update_worksheet(stock_data, 'stock')
+
 
 print('Welcome to love Sandwiches Data Automation')
-main()
+# main()
+
+sales_columns = get_last_5_entries_sales()
+stock_data = calculate_stock_data(sales_columns)
+update_worksheet(stock_data, 'stock')
+get_stock_values(stock_data)
